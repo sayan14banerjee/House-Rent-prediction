@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>House Rent Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 1rem 0;
+        text-align: center;
+      }
+      main {
+        padding: 2rem;
+        text-align: center;
+      }
+      form {
+        margin: 2rem auto;
+        max-width: 600px;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      form input,
+      form select,
+      form button {
+        width: 100%;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      form button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #45a049;
+      }
+      footer {
+        text-align: center;
+        padding: 1rem 0;
+        background-color: #333;
+        color: white;
+        margin-top: 2rem;
+      }
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>House Rent Prediction</h1>
+    </header>
+    <main>
+      <p>Enter the details below to predict the median value of a house:</p>
+      <form id="predictionForm" action="/predict" method="POST">
+        <!-- Input fields -->
+        <label for="crim">CRIM (Per Capita Crime Rate):</label>
+        <input
+          type="number"
+          id="crim"
+          name="crim"
+          step="0.01"
+          placeholder="Enter CRIM"
+          required
+        />
+
+        <label for="zn">ZN (Proportion of Residential Land):</label>
+        <input
+          type="number"
+          id="zn"
+          name="zn"
+          step="0.01"
+          placeholder="Enter ZN"
+          required
+        />
+
+        <label for="indus">INDUS (Non-Retail Business Acres):</label>
+        <input
+          type="number"
+          id="indus"
+          name="indus"
+          step="0.01"
+          placeholder="Enter INDUS"
+          required
+        />
+
+        <label for="chas">CHAS (Charles River Dummy Variable):</label>
+        <select id="chas" name="chas" required>
+          <option value="1">1 (Bounds River)</option>
+          <option value="0">0 (Does Not Bound River)</option>
+        </select>
+
+        <label for="nox">NOX (Nitric Oxides Concentration):</label>
+        <input
+          type="number"
+          id="nox"
+          name="nox"
+          step="0.01"
+          placeholder="Enter NOX"
+          required
+        />
+
+        <label for="rm">RM (Average Number of Rooms):</label>
+        <input
+          type="number"
+          id="rm"
+          name="rm"
+          step="0.01"
+          placeholder="Enter RM"
+          required
+        />
+
+        <label for="age">AGE (Proportion of Owner-Occupied Units):</label>
+        <input
+          type="number"
+          id="age"
+          name="age"
+          step="0.01"
+          placeholder="Enter AGE"
+          required
+        />
+
+        <label for="dis">DIS (Weighted Distances to Employment Centres):</label>
+        <input
+          type="number"
+          id="dis"
+          name="dis"
+          step="0.01"
+          placeholder="Enter DIS"
+          required
+        />
+
+        <label for="rad">RAD (Accessibility to Highways):</label>
+        <input
+          type="number"
+          id="rad"
+          name="rad"
+          placeholder="Enter RAD"
+          required
+        />
+
+        <label for="tax">TAX (Property-Tax Rate):</label>
+        <input
+          type="number"
+          id="tax"
+          name="tax"
+          placeholder="Enter TAX"
+          required
+        />
+
+        <label for="ptratio">PTRATIO (Pupil-Teacher Ratio):</label>
+        <input
+          type="number"
+          id="ptratio"
+          name="ptratio"
+          step="0.01"
+          placeholder="Enter PTRATIO"
+          required
+        />
+
+        <label for="b">B (Proportion of Blacks by Town):</label>
+        <input
+          type="number"
+          id="b"
+          name="b"
+          step="0.01"
+          placeholder="Enter B"
+          required
+        />
+
+        <label for="lstat">LSTAT (% Lower Status Population):</label>
+        <input
+          type="number"
+          id="lstat"
+          name="lstat"
+          step="0.01"
+          placeholder="Enter LSTAT"
+          required
+        />
+
+        <label for="tpr">TPR (Tax Per Room):</label>
+        <input
+          type="number"
+          id="tpr"
+          name="tpr"
+          step="0.01"
+          placeholder="Enter TPR"
+          required
+        />
+
+        <button type="submit">Predict MEDV</button>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2025 House Rent Prediction Project</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="resultModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="resultText"></p>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("predictionForm");
+      const modal = document.getElementById("resultModal");
+      const resultText = document.getElementById("resultText");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent form submission
+        const formData = new FormData(form);
+
+        // Send form data to the server
+        const response = await fetch("/predict", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.text(); // Get the prediction result
+        resultText.textContent = result; // Set the result in the modal
+        modal.style.display = "block"; // Show the modal
+      });
+
+      function closeModal() {
+        modal.style.display = "none"; // Close the modal
+      }
+    </script>
+  </body>
+</html>
